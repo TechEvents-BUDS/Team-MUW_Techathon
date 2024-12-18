@@ -3,7 +3,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package techaton;
-
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author TFS
@@ -26,21 +32,245 @@ public class Voting extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        candidatetable = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
+        votebutton = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        votecounted = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        cnicField = new javax.swing.JTextField();
+        jPanel1 = new javax.swing.JPanel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(0, 102, 0));
+
+        candidatetable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Name", "Team Name", "Gender", "Area"
+            }
+        ));
+        candidatetable.setRowHeight(25);
+        candidatetable.setSelectionBackground(new java.awt.Color(102, 102, 102));
+        jScrollPane1.setViewportView(candidatetable);
+
+        jLabel2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Candidate List");
+
+        votebutton.setBackground(new java.awt.Color(204, 204, 204));
+        votebutton.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        votebutton.setText("Vote");
+        votebutton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                votebuttonActionPerformed(evt);
+            }
+        });
+
+        jButton3.setBackground(new java.awt.Color(0, 0, 0));
+        jButton3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jButton3.setForeground(new java.awt.Color(255, 255, 255));
+        jButton3.setText("Show Candidate");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        votecounted.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        votecounted.setForeground(new java.awt.Color(255, 255, 255));
+        votecounted.setText("Vote Counted!!!!!");
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Cast Your vote");
+
+        jLabel3.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Enter CNIC:");
+
+        cnicField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cnicFieldActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 500, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(221, 221, 221)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(21, 21, 21)
+                            .addComponent(jLabel3)
+                            .addGap(9, 9, 9)
+                            .addComponent(cnicField, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(133, 133, 133)
+                            .addComponent(votecounted))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(21, 21, 21)
+                            .addComponent(jButton3))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(234, 234, 234)
+                            .addComponent(jLabel2))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(257, 257, 257)
+                            .addComponent(votebutton)))
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 397, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jLabel1)
+                    .addGap(24, 24, 24)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel3)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(1, 1, 1)
+                            .addComponent(cnicField, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(3, 3, 3)
+                            .addComponent(votecounted)))
+                    .addGap(24, 24, 24)
+                    .addComponent(jButton3)
+                    .addGap(21, 21, 21)
+                    .addComponent(jLabel2)
+                    .addGap(18, 18, 18)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(18, 18, 18)
+                    .addComponent(votebutton)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void votebuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_votebuttonActionPerformed
+        int selectedRow = candidatetable.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a candidate.");
+            return;
+        }
+
+        String candidateName = (String) candidatetable.getValueAt(selectedRow, 1);
+        String cnic = cnicField.getText().trim();
+
+        if (cnic.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please enter your CNIC.");
+            return;
+        }
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/check", "root", "");
+
+            // Check if the user exists in voterinfo table
+            PreparedStatement checkVoterStmt = conn.prepareStatement("SELECT * FROM voterinfo WHERE cnic = ?");
+            checkVoterStmt.setString(1, cnic);
+            ResultSet rs = checkVoterStmt.executeQuery();
+
+            if (!rs.next()) {
+                JOptionPane.showMessageDialog(this, "CNIC not found in voter list.");
+                conn.close();
+                return;
+            }
+
+            // Check if the user has already voted
+            PreparedStatement checkVoteStmt = conn.prepareStatement("SELECT * FROM record WHERE cnic = ?");
+            checkVoteStmt.setString(1, cnic);
+            rs = checkVoteStmt.executeQuery();
+
+            if (rs.next()) {
+                JOptionPane.showMessageDialog(this, "You have already voted.");
+                conn.close();
+                return;
+            }
+            String updateSql = "UPDATE results SET votecount = votecount + 1 WHERE partyname = ?";
+            PreparedStatement updateStmt = conn.prepareStatement(updateSql);
+            updateStmt.setString(1, candidateName);
+            updateStmt.executeUpdate();
+            String sql = "INSERT INTO record (partyname, cnic) VALUES (?, ?)";
+            PreparedStatement ptst = conn.prepareStatement(sql);
+            ptst.setString(1, candidateName);
+            ptst.setString(2, cnic);
+            ptst.executeUpdate();
+
+            // Update the result table for the candidate
+            /*String sql1 = "INSERT INTO results(candidatename, votecount) VALUES (?, 1)";
+            PreparedStatement ptst1 = conn.prepareStatement(sql1);
+            ptst1.setString(1, candidateName);
+            ptst1.executeUpdate();*/
+            // Show success message
+            votecounted.setVisible(true);
+            JOptionPane.showMessageDialog(this, "Vote has been counted.");
+
+            // Close the connection
+            conn.close();
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_votebuttonActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection conn= DriverManager.getConnection("jdbc:mysql://localhost:3306/check","root", "");
+            Statement st= conn.createStatement();
+            String sql="SELECT * FROM  csignup";
+            PreparedStatement ptst=conn.prepareStatement(sql);
+            ResultSet rs =ptst.executeQuery();
+            DefaultTableModel tm=(DefaultTableModel)candidatetable.getModel();
+            tm.setRowCount(0);
+            while(rs.next()){
+                Object o[]={rs.getString("name"),rs.getString("teamname"),rs.getString("gender"),rs.getString("area")};
+                tm.addRow(o);
+            }
+
+        }
+        catch(Exception e)
+        {
+            JOptionPane.showMessageDialog(this,e);
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void cnicFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cnicFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cnicFieldActionPerformed
 
     /**
      * @param args the command line arguments
@@ -78,5 +308,15 @@ public class Voting extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable candidatetable;
+    private javax.swing.JTextField cnicField;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton votebutton;
+    private javax.swing.JLabel votecounted;
     // End of variables declaration//GEN-END:variables
 }

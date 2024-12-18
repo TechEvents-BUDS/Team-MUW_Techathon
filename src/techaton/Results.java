@@ -21,8 +21,7 @@ public class Results extends javax.swing.JFrame {
      */
     public Results() {
         initComponents();
-         selection s =new selection();
-        s.setVisible(true);
+      
     }
 
     /**
